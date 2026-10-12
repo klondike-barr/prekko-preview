@@ -17,11 +17,14 @@
     var c = d.documentElement.classList;
     c.add("js");
     if (location.hash !== "#waitlist") c.add("gate-open");
-    // If the app script never starts (very old browser, blocked script), never leave the gate locked.
-    setTimeout(function () { if (!window.__prekko) { c.remove("gate-open"); c.remove("js"); } }, 5000);
+    // If the app script never gets the gate working (very old browser, blocked script, an error while starting),
+    // never leave the gate locked: fall back to the plain text story.
+    var fallback = function () { if (!window.__prekko) { c.remove("gate-open"); c.remove("js"); } };
+    window.addEventListener("error", function () { setTimeout(fallback, 0); });
+    setTimeout(fallback, 8000);
   })(document);
 </script>
-  <script type="module" crossorigin src="/prekko-preview/assets/main-CyxL_sS0.js"></script>
+  <script type="module" crossorigin src="/prekko-preview/assets/main-xiM9uLC4.js"></script>
   <link rel="stylesheet" crossorigin href="/prekko-preview/assets/main-YFJyau36.css">
 </head>
 <body>
