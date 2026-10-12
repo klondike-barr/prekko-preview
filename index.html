@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prekko | The hunt, from the cat's eyes</title>
+<meta name="description" content="Prekko Pawbot is a robot that plays with your cat like prey would. Working prototype shown; final design may differ. Join the waitlist for launch updates.">
+<meta name="theme-color" content="#1d2440">
+<link rel="icon" href="/prekko-preview/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/prekko-preview/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/prekko-preview/apple-touch-icon-180.png">
+<!-- The page body comes from src/story.js, rendered by src/render.js at build time (vite.config.js). -->
+<script>
+  // Before first paint: mark JS on, open the gate unless the visitor came for the waitlist.
+  (function (d) {
+    var c = d.documentElement.classList;
+    c.add("js");
+    if (location.hash !== "#waitlist") c.add("gate-open");
+    // If the app script never starts (very old browser, blocked script), never leave the gate locked.
+    setTimeout(function () { if (!window.__prekko) { c.remove("gate-open"); c.remove("js"); } }, 5000);
+  })(document);
+</script>
+  <script type="module" crossorigin src="/prekko-preview/assets/main-CyxL_sS0.js"></script>
+  <link rel="stylesheet" crossorigin href="/prekko-preview/assets/main-YFJyau36.css">
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><div class="backdrop__beam"></div><div class="backdrop__floor"></div></div>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="soften" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="blackout" aria-hidden="true"></div>
+<!-- Focus order: header, then the autoplay control (an early Tab stop), then the rail, then the story. -->
+<header class="top">
+  <a class="top__brand" href="#hour-six"><svg class="logo logo--top" xmlns="http://www.w3.org/2000/svg" viewBox="11.3 8.5 419.2 110" role="img" aria-label="Prekko"><g transform="translate(0 4)"><path class="logo__fill logo__draw" d="M24 88C15 88 12 77 15 66C18 56 25 49 30 45C26 40 25 32 28 24L30 8L38 15Q44 13 50 15L59 7L60 24C63 32 62 40 58 45C64 49 71 56 73 66C76 77 73 88 64 88Z" fill="#F0F1EE" stroke="#F0F1EE" stroke-width="5" stroke-linejoin="round" pathLength="1"/><path class="logo__draw" d="M62 87.25H74C86 87.25 91 80 89 72C88 66 83 65 81 69" fill="none" stroke="#F0F1EE" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></g><g transform="translate(118 48)"><g fill="none" stroke="#F0F1EE" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"><path class="logo__draw" d="M0 0V64M0 20A20 20 0 1 0 40 20A20 20 0 1 0 0 20Z" pathLength="1"/><path class="logo__draw" d="M62 40V18A18 18 0 0 1 80 0H84" pathLength="1"/><path class="logo__draw" d="M104 20H144A20 20 0 1 0 138.14 34.14" pathLength="1"/><path class="logo__draw" d="M166 -22V40M192 0L168 21L195 40" pathLength="1"/><path class="logo__draw" d="M216 -22V40M242 0L218 21L245 40" pathLength="1"/><path class="logo__draw" d="M266 20A20 20 0 1 0 306 20A20 20 0 1 0 266 20Z" pathLength="1"/></g></g></svg></a>
+  <div class="top__actions">
+    <button class="ctl" id="sound-toggle" type="button" aria-pressed="false"><span class="ctl__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 6h2.5L8 3v10L4.5 10H2z"/><g class="is-off"><path d="M11 6l4 4M15 6l-4 4"/></g><g class="is-on"><path d="M10.5 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6.3 6.3 0 0 1 0 9"/></g></svg></span><span class="ctl__label">Sound</span></button>
+    <button class="ctl" id="motion-toggle" type="button" aria-pressed="true"><span class="ctl__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="is-on"><path d="M5 3v10M11 3v10"/></g><g class="is-off"><path d="M4.5 3l9 5-9 5z"/></g></svg></span><span class="ctl__label">Motion</span></button>
+    <a class="top__link" href="#how-it-works">How it works</a>
+    <a class="top__cta" href="#waitlist">Join the waitlist</a>
+  </div>
+</header>
+<div class="autoplay" role="group" aria-label="Autoplay" data-playing="Autoplay: scroll to take over" data-play="Play" data-replay="Play again">
+  <button class="autoplay__btn" id="autoplay" type="button" aria-pressed="false"><span class="ctl__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="is-on"><path d="M5 3.5v9M11 3.5v9"/></g><g class="is-off"><path d="M4.5 3l9 5-9 5z"/></g></svg></span><span class="autoplay__text">Play</span></button>
+  <span class="autoplay__bar" aria-hidden="true"><span></span></span>
+</div>
+<nav class="rail" aria-label="Chapters">
+  <div class="rail__track" aria-hidden="true"><span class="rail__fill"></span></div>
+  <ol>
+      <li><a href="#hour-six" data-index="0"><span class="rail__n">01</span><span class="rail__t">Hour six</span></a></li>
+      <li><a href="#something-moved" data-index="1"><span class="rail__n">02</span><span class="rail__t">Something moved</span></a></li>
+      <li><a href="#freeze" data-index="2"><span class="rail__n">03</span><span class="rail__t">Freeze</span></a></li>
+      <li><a href="#dart" data-index="3"><span class="rail__n">04</span><span class="rail__t">Dart</span></a></li>
+      <li><a href="#pounce" data-index="4"><span class="rail__n">05</span><span class="rail__t">Pounce</span></a></li>
+      <li><a href="#who" data-index="5"><span class="rail__n">06</span><span class="rail__t">Who's moving the toy?</span></a></li>
+      <li><a href="#how-it-works" data-index="6"><span class="rail__n">07</span><span class="rail__t">How it works</span></a></li>
+      <li><a href="#learns" data-index="7"><span class="rail__n">08</span><span class="rail__t">It learns your cat</span></a></li>
+      <li><a href="#your-cats-day" data-index="8"><span class="rail__n">09</span><span class="rail__t">Your cat's day</span></a></li>
+      <li><a href="#waitlist" data-index="9"><span class="rail__n">10</span><span class="rail__t">Waitlist</span></a></li>
+  </ol>
+</nav>
+<a class="dock-link" href="#how-it-works">How it works</a>
+<main id="story">
+  <p class="fallback-note">Your browser can't show the 3D scene, so here is the story as text.</p>
+<section class="chapter chapter--hour-six" id="hour-six" data-index="0" data-align="left" style="--len:220">
+  <div class="chapter__inner">
+    <p class="chapter__what">A robot that hunts with your cat and learns how your cat likes to play.</p><p class="chapter__story">The hunt, from the cat's eyes</p><p class="chapter__num"><span>01</span> / 10</p>
+    <h1 class="chapter__title" tabindex="-1">Hour six.</h1>
+    <div class="chapter__body">
+    <p>The house is quiet. Sun on the floor, dust in the air, nothing to do.</p>
+    <p data-at="0.4">You are a cat now. Your eyes are a hand's width off the floor, and you have been waiting a long time.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--something-moved" id="something-moved" data-index="1" data-align="left" style="--len:260">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>02</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Something moved.</h2>
+    <div class="chapter__body">
+    <p>At the edge of the room, a feather twitches.</p>
+    <p data-at="0.6">Your pupils go wide. Everything else goes soft.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--freeze" id="freeze" data-index="2" data-align="left" style="--len:210">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>03</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Freeze.</h2>
+    <div class="chapter__body">
+    <p>It stops. So do you.</p>
+    <p data-at="0.45">Lower. Slower. Something that holds still is still something.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--dart" id="dart" data-index="3" data-align="right" style="--len:340">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>04</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Dart.</h2>
+    <div class="chapter__body">
+    <p>A dash across the light. Gone behind the cushion. A pause. A peek.</p>
+    <p data-at="0.6">Real prey doesn't run in circles. It runs, it hides, and it checks whether you are still there.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--pounce" id="pounce" data-index="4" data-align="left" style="--len:300">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>05</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Pounce.</h2>
+    <div class="chapter__body">
+    <p>Now.</p>
+    <p data-at="0.42">Got it. Every hunt deserves an ending you can catch.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--who has-card" id="who" data-index="5" data-align="left" style="--len:340">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>06</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Who's moving the toy?</h2>
+    <div class="chapter__body" data-at="0.24">
+    <h3 class="chapter__headline">Meet the Prekko Pawbot.</h3>
+    <p>It runs play sessions on its own and stops when your cat loses interest.</p>
+    <p class="lede" data-at="0.6">It doesn't play back a loop. Every move is chosen live, for your cat. Working prototype shown; final design may differ.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--how-it-works has-layers" id="how-it-works" data-index="6" data-align="left" style="--len:400">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>07</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Three layers of AI.</h2>
+    <div class="chapter__body">
+    <p>Three AI systems, working as one.</p>
+    <ol class="layers" aria-label="The three layers"><li data-at="0.2"><span class="layers__n">01</span><span class="layers__name">See</span><span class="layers__d">Vision AI tracks your cat in real time: where they are, how fast they move, where they look, how low they crouch and how interested they are.</span></li><li data-at="0.42"><span class="layers__n">02</span><span class="layers__name">Choose</span><span class="layers__d">A strategy layer reads your cat's mood and picks from 12 prey patterns, playing the moves your cat chases.</span></li><li data-at="0.64"><span class="layers__n">03</span><span class="layers__name">Move</span><span class="layers__d">A motion layer fine-tunes that pattern with 8 parameters, adjusted 30 times a second.</span></li></ol>
+    <div class="sum">
+      <p class="stats" data-at="0.84"><span class="stat"><b class="stat__n">12</b> <span class="stat__t">prey patterns.</span></span> <span class="stat"><b class="stat__n">8</b> <span class="stat__t">parameters each.</span></span> <span class="stat"><b class="stat__n">30</b> <span class="stat__t">updates a second.</span></span></p>
+      <p class="closer" data-at="0.84">Endless variations. No preset loops.</p>
+    </div>
+    <p class="caption caption--tree" data-at="0.2">Illustration, not the real model.</p>
+    
+    </div>
+  </div>
+  <div class="stack-tags" aria-hidden="true"><svg class="stack-tags__lines"><line/><line/><line/></svg><i class="stack-tag__dot"></i><i class="stack-tag__dot"></i><i class="stack-tag__dot"></i><span class="stack-tag" data-layer="0"><span class="stack-tag__n">01</span><span class="stack-tag__name">See</span></span><span class="stack-tag" data-layer="1"><span class="stack-tag__n">02</span><span class="stack-tag__name">Choose</span></span><span class="stack-tag" data-layer="2"><span class="stack-tag__n">03</span><span class="stack-tag__name">Move</span></span></div>
+</section>
+<section class="chapter chapter--learns" id="learns" data-index="7" data-align="left" style="--len:340">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>08</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">It learns your cat.</h2>
+    <div class="chapter__body">
+    <p>Every session teaches it something: the moves your cat chases, and the ones they ignore.</p>
+    <p data-at="0.32">Overnight, it trains on the day's play and comes back sharper.</p>
+    <p data-at="0.62">It learns how your cat plays and gets better at playing with your cat over time.</p>
+    <p class="caption">Illustration of how it learns, not recorded data.</p>
+    
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--your-cats-day chapter--rich" id="your-cats-day" data-index="8" data-align="left" style="--len:200">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>09</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Your cat's day.</h2>
+    <div class="chapter__body">
+    <p>You control it from your phone.</p>
+    <p>A planned tracker in the app would log the day's hunting: when play happened, how long it lasted, and the quiet stretches between.</p>
+    <figure class="activity">
+  <figcaption class="activity__head"><span class="activity__badge">Planned feature, not in the prototype shown</span><span class="activity__example">Example day. Illustrative numbers, not measurements.</span></figcaption>
+  <div class="activity__body">
+    <svg class="ring" viewBox="0 0 320 320" role="img" aria-label="Example day as a 24-hour clock">
+      <circle class="ring__day" cx="160" cy="160" r="118"/>
+      <path class="ring__awake" d="M 278.00 160.00 A 118 118 0 1 1 129.46 46.02"/>
+      <path class="ring__bored" d="M 265.14 213.57 A 118 118 0 0 1 214.94 264.43"/><path class="ring__bored" d="M 191.04 273.84 A 118 118 0 0 1 117.71 270.16"/><path class="ring__bored" d="M 95.73 258.96 A 118 118 0 0 1 44.91 186.04"/><path class="ring__bored" d="M 42.03 157.43 A 118 118 0 0 1 69.28 84.55"/><path class="ring__hunt" d="M 271.74 197.93 A 118 118 0 0 1 268.66 206.01"/><path class="ring__hunt" d="M 205.16 269.02 A 118 118 0 0 1 197.05 272.03"/><path class="ring__hunt" d="M 107.81 265.83 A 118 118 0 0 1 100.20 261.72"/><path class="ring__hunt" d="M 43.01 175.40 A 118 118 0 0 1 42.20 166.79"/><path class="ring__hunt" d="M 76.56 76.56 A 118 118 0 0 1 82.90 70.67"/><text class="ring__tick" x="160.0" y="22.0" text-anchor="middle">00</text><text class="ring__tick" x="302.0" y="164.0" text-anchor="middle">06</text><text class="ring__tick" x="160.0" y="306.0" text-anchor="middle">12</text><text class="ring__tick" x="18.0" y="164.0" text-anchor="middle">18</text>
+      <text class="ring__big" x="160" y="168" text-anchor="middle">49 min</text>
+      <text class="ring__small" x="160" y="196" text-anchor="middle">play time</text>
+    </svg>
+    <dl class="activity__figures">
+      <div><dt>Play time</dt><dd>49 min</dd></div>
+      <div><dt>Hunting sessions</dt><dd>5</dd></div>
+      <div><dt>Boredom stretches</dt><dd>4 <span>(longest 3 h 39 min)</span></dd></div>
+    </dl>
+  </div>
+</figure>
+    </div>
+  </div>
+</section>
+<section class="chapter chapter--waitlist chapter--rich" id="waitlist" data-index="9" data-align="left" style="--len:140">
+  <div class="chapter__inner">
+    <p class="chapter__num"><span>10</span> / 10</p>
+    <h2 class="chapter__title" tabindex="-1">Follow the hunt.</h2>
+    <div class="chapter__body">
+    <p>Prekko Pawbot is a working prototype. Price and ship date are not set yet; people on the list get launch updates by email.</p>
+    <form id="waitlist-form" class="signup" novalidate data-msgs="{&quot;sending&quot;:&quot;Joining…&quot;,&quot;ok&quot;:&quot;You're on the list. A welcome email is on its way.&quot;,&quot;invalid&quot;:&quot;Enter an email address like name@example.com.&quot;,&quot;tooMany&quot;:&quot;Too many tries from this network. Try again in a few minutes.&quot;,&quot;rejected&quot;:&quot;The server didn't accept that address. Check it and try again.&quot;,&quot;failed&quot;:&quot;Something went wrong on our side. Try again in a minute.&quot;,&quot;preview&quot;:&quot;Thanks! This is an early preview, so nothing was sent. Sign-ups open at launch.&quot;}">
+  <label class="signup__label" for="email">Email address</label>
+  <div class="signup__row">
+    <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+    <button id="submit" class="btn btn--sun" type="submit">Join the waitlist</button>
+  </div>
+  <div class="hp" aria-hidden="true">
+    <label for="website">Leave this empty</label>
+    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <p id="msg" class="signup__msg" role="status" aria-live="polite"></p>
+  <p class="signup__note">Launch updates only. Unsubscribe from any email. <a href="privacy.html">Privacy</a></p>
+</form>
+<p class="disclosure">Working prototype shown; final design may differ.</p>
+    </div>
+  </div>
+</section>
+</main>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <h2 id="gate-title" class="visually-hidden">Prekko, a short story told at cat height</h2>
+  <div class="gate__mark"><svg class="logo logo--gate" xmlns="http://www.w3.org/2000/svg" viewBox="-6.5 6.3 319 240.8" role="img" aria-label="Prekko"><g transform="translate(83.89 0) scale(1.4)"><path class="logo__fill logo__draw" d="M24 88C15 88 12 77 15 66C18 56 25 49 30 45C26 40 25 32 28 24L30 8L38 15Q44 13 50 15L59 7L60 24C63 32 62 40 58 45C64 49 71 56 73 66C76 77 73 88 64 88Z" fill="#F0F1EE" stroke="#F0F1EE" stroke-width="5" stroke-linejoin="round" pathLength="1"/><path class="logo__draw" d="M62 87.25H74C86 87.25 91 80 89 72C88 66 83 65 81 69" fill="none" stroke="#F0F1EE" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></g><g transform="translate(0 176.6)"><g fill="none" stroke="#F0F1EE" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"><path class="logo__draw" d="M0 0V64M0 20A20 20 0 1 0 40 20A20 20 0 1 0 0 20Z" pathLength="1"/><path class="logo__draw" d="M62 40V18A18 18 0 0 1 80 0H84" pathLength="1"/><path class="logo__draw" d="M104 20H144A20 20 0 1 0 138.14 34.14" pathLength="1"/><path class="logo__draw" d="M166 -22V40M192 0L168 21L195 40" pathLength="1"/><path class="logo__draw" d="M216 -22V40M242 0L218 21L245 40" pathLength="1"/><path class="logo__draw" d="M266 20A20 20 0 1 0 306 20A20 20 0 1 0 266 20Z" pathLength="1"/></g></g></svg></div>
+  <p class="gate__what">A robot that hunts with your cat and learns how your cat likes to play.</p>
+  <p class="gate__line">A short story in ten scenes, told at cat height.</p>
+  <div class="gate__progress" role="progressbar" aria-label="Setting up the room" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <span class="gate__count">000</span><span class="gate__bar"><span></span></span><span class="gate__status">Setting up the room</span>
+  </div>
+  <div class="gate__actions">
+    <button class="btn btn--sun" id="enter-sound" type="button">Enter with sound</button>
+    <button class="btn btn--ghost" id="enter-muted" type="button">Enter muted</button>
+  </div>
+  <a class="gate__skip" href="#waitlist" id="gate-skip">Skip to the waitlist</a>
+</div>
+</body>
+</html>
